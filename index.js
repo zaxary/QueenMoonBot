@@ -46,8 +46,7 @@ client.on("message", async message => {
   // All the cases
   if(command.match(/\bggwtf help\b/) != null) {
     message.channel.send("Commands:\n'getWtfCounter' to get the current counter across all servers");
-  } else if(command.includes("getwtfcounter")) {
-    // Get counter
+  } else if(command.match(/\bgetwtfcounter\b/) != null) {
     message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString()));
   } else if(command.match(/\bgg\b/) != null && command.match(/\bwtf\b/) != null) {
     message.channel.send("gg wtf");
@@ -65,12 +64,8 @@ client.on("message", async message => {
     message.channel.send("Eustis does your ass");
   }
 
-  // Randomly send message
-  if(Math.floor(Math.random() * 100) < 10) {
-    if(Math.floor(Math.random() * 10) < 5)
-      message.channel.send("wait when");
-    else
-      message.channel.send("when");
+  if(command.endsWith("when")) {
+    message.channel.send("wait when");
   }
 
   // Saves new count to json file
