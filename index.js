@@ -40,17 +40,21 @@ client.on("message", async message => {
     return;
 
 
+  const command = message.content.toLowerCase();
+
+  if(command.match(/\bggwtf help\b/) != null) {
+    message.channel.send("Commands:\n'getWtfCounter' to get the current counter across all servers");
+  } else if(command.match(/\bgetwtfcounter\b/) != null) {
+    message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString()));
+  }
+
+
   if(Math.floor(Math.random() * 15) < 5) {
     let num = -1;
 
-    const command = message.content.toLowerCase();
 
     // All the cases
-    if(command.match(/\bggwtf help\b/) != null) {
-      message.channel.send("Commands:\n'getWtfCounter' to get the current counter across all servers");
-    } else if(command.match(/\bgetwtfcounter\b/) != null) {
-      message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString()));
-    } else if(command.match(/\bgg\b/) != null && command.match(/\bwtf\b/) != null) {
+    if(command.match(/\bgg\b/) != null && command.match(/\bwtf\b/) != null) {
       message.channel.send("gg wtf");
       num = 0;
     } else if(command.match(/\bgg\b/) != null) {
