@@ -49,7 +49,7 @@ client.on("message", async message => {
   if(command.match(/\bkilla help\b/) != null) {
     message.channel.send("Commands:\n```* `getKillaCounter` to get the current counter across all servers\n* add `killa` to the start of your message to override the 33% chance of the bot responding\n* `killa no anime` to get the no anime picture\n* `killa hackathon` to get the done with hackathons picture```");
   } else if(command.match(/\bgetkillacounter\b/) != null) {
-    message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString()));
+    message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString(), "\neda count: ", count[4]["messageCount"].toString()));
   }
 
   if(override) {
@@ -78,6 +78,7 @@ client.on("message", async message => {
       message.channel.send("b o g");
       num = 3;
     } else if(command.match(/\beda\b/) != null) {
+      num = 4;
       message.channel.send("Eustis does your ass");
     }
 
