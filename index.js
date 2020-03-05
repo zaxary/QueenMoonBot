@@ -39,6 +39,18 @@ client.on("message", async message => {
   if(message.author.bot)
     return;
 
+  if(message.channel.id === '684979501566001206') {
+      message.channel.messages.fetch({ limit: 2 }).then(messages => {
+        const lastMessage = messages.array();
+        if(Number(lastMessage[0].content) - 1 != Number(lastMessage[1].content)) {
+          message.delete(lastMessage[0]);
+          console.log("NOT NEXT");
+        }
+      }).catch(err => {
+        console.error(err)
+      })
+  }
+
 
   const command = message.content.toLowerCase();
   let override = false;
