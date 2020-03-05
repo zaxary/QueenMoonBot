@@ -49,7 +49,7 @@ client.on("message", async message => {
     message.channel.send("Commands:\n'getWtfCounter' to get the current counter across all servers");
   } else if(command.includes("getwtfcounter")) {
     // Get counter
-    message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString()));
+    message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString()));
   } else if(command.match(/\bgg\b/) != null && command.match(/\bwtf\b/) != null) {
     message.channel.send("gg wtf");
 
@@ -78,6 +78,17 @@ client.on("message", async message => {
     // Saves new count to json file
     if (!count[2]) count[2] = { messageCount: 1 };
     else count[2].messageCount++;
+    try {
+      fs.writeFileSync('./count.json', JSON.stringify(count));
+    } catch(err) {
+      console.error(err);
+    }
+  } else if(command.match(/\bbog\b/) != null || command.match(/\bb o g\b/) != null || command.match(/\bpog\b/) != null || command.match(/\bpoggers\b/) != null || command.match(/\bpogger\b/) != null) {
+    message.channel.send("b o g");
+
+    // Saves new count to json file
+    if (!count[3]) count[3] = { messageCount: 1 };
+    else count[3].messageCount++;
     try {
       fs.writeFileSync('./count.json', JSON.stringify(count));
     } catch(err) {
