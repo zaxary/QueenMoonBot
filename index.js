@@ -64,7 +64,7 @@ client.on("message", async message => {
     message.channel.send("Eustis does your ass");
   }
 
-  if(command.endsWith("when")) {
+  if(command.endsWith("when") && Math.floor(Math.random() * 10) < 5) {
     message.channel.send("wait when");
   }
 
