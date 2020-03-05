@@ -40,6 +40,7 @@ client.on("message", async message => {
 
   // Don't respond to bots
   if(message.author.bot) return;
+  let num = -1;
 
 
   const command = message.content.toLowerCase();
@@ -52,43 +53,22 @@ client.on("message", async message => {
     message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString()));
   } else if(command.match(/\bgg\b/) != null && command.match(/\bwtf\b/) != null) {
     message.channel.send("gg wtf");
-
-    // Saves new count to json file
-    if (!count[0]) count[0] = { messageCount: 1 };
-    else count[0].messageCount++;
-    try {
-      fs.writeFileSync('./count.json', JSON.stringify(count));
-    } catch(err) {
-      console.error(err);
-    }
+    num = 0;
   } else if(command.match(/\bgg\b/) != null) {
     message.channel.send("gg");
-
-    // Saves new count to json file
-    if (!count[1]) count[1] = { messageCount: 1 };
-    else count[1].messageCount++;
-    try {
-      fs.writeFileSync('./count.json', JSON.stringify(count));
-    } catch(err) {
-      console.error(err);
-    }
+    num = 1;
   } else if(command.match(/\bwtf\b/) != null) {
     message.channel.send("wtf");
-
-    // Saves new count to json file
-    if (!count[2]) count[2] = { messageCount: 1 };
-    else count[2].messageCount++;
-    try {
-      fs.writeFileSync('./count.json', JSON.stringify(count));
-    } catch(err) {
-      console.error(err);
-    }
+    num = 2;
   } else if(command.match(/\bbog\b/) != null || command.match(/\bb o g\b/) != null || command.match(/\bpog\b/) != null || command.match(/\bpoggers\b/) != null || command.match(/\bpogger\b/) != null) {
     message.channel.send("b o g");
+    num = 3;
+  }
 
-    // Saves new count to json file
-    if (!count[3]) count[3] = { messageCount: 1 };
-    else count[3].messageCount++;
+  // Saves new count to json file
+  if(num != -1) {
+    if (!count[num]) count[num] = { messageCount: 1 };
+    else count[num].messageCount++;
     try {
       fs.writeFileSync('./count.json', JSON.stringify(count));
     } catch(err) {
