@@ -34,14 +34,15 @@ client.on("guildDelete", guild => {
 
 // Runs when a new message is sent on a server
 client.on("message", async message => {
-
-  // Don't respond to bots
-  if(message.author.bot)
-    return;
-
   if(message.channel.id === '684979501566001206') {
       message.channel.messages.fetch({ limit: 2 }).then(messages => {
+
         const lastMessage = messages.array();
+        if(lastMessage[0].author.bot || lastMessage[1].author.bot) {
+          message.delete(lastMessage[1]);
+          return;
+        }
+
         if(Number(lastMessage[0].content) - 1 != Number(lastMessage[1].content)) {
           message.delete(lastMessage[0]);
           console.log("NOT NEXT");
@@ -50,6 +51,10 @@ client.on("message", async message => {
         console.error(err)
       })
   }
+
+  // Don't respond to bots
+  if(message.author.bot)
+    return;
 
 
   const command = message.content.toLowerCase();
