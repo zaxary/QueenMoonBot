@@ -63,6 +63,12 @@ client.on("message", async message => {
   } else if(command.match(/\bbog\b/) != null || command.match(/\bb o g\b/) != null || command.match(/\bpog\b/) != null || command.match(/\bpoggers\b/) != null || command.match(/\bpogger\b/) != null) {
     message.channel.send("b o g");
     num = 3;
+  } else if(command.match(/\beda\b/) != null) {
+    message.channel.send("Eustis does your ass");
+  }
+
+  if(Math.floor(Math.random() * 100) < 10) {
+    message.channel.send("wait when")
   }
 
   // Saves new count to json file
