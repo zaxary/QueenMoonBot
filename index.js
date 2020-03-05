@@ -39,43 +39,46 @@ client.on("message", async message => {
   if(message.author.bot)
     return;
 
-  let num = -1;
 
-  const command = message.content.toLowerCase();
+  if(Math.floor(Math.random() * 15) < 5) {
+    let num = -1;
 
-  // All the cases
-  if(command.match(/\bggwtf help\b/) != null) {
-    message.channel.send("Commands:\n'getWtfCounter' to get the current counter across all servers");
-  } else if(command.match(/\bgetwtfcounter\b/) != null) {
-    message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString()));
-  } else if(command.match(/\bgg\b/) != null && command.match(/\bwtf\b/) != null) {
-    message.channel.send("gg wtf");
-    num = 0;
-  } else if(command.match(/\bgg\b/) != null) {
-    message.channel.send("gg");
-    num = 1;
-  } else if(command.match(/\bwtf\b/) != null) {
-    message.channel.send("wtf");
-    num = 2;
-  } else if(command.match(/\bbog\b/) != null || command.match(/\bb o g\b/) != null || command.match(/\bpog\b/) != null || command.match(/\bpoggers\b/) != null || command.match(/\bpogger\b/) != null) {
-    message.channel.send("b o g");
-    num = 3;
-  } else if(command.match(/\beda\b/) != null) {
-    message.channel.send("Eustis does your ass");
-  }
+    const command = message.content.toLowerCase();
 
-  if(command.endsWith("when") && Math.floor(Math.random() * 10) < 5) {
-    message.channel.send("wait when");
-  }
+    // All the cases
+    if(command.match(/\bggwtf help\b/) != null) {
+      message.channel.send("Commands:\n'getWtfCounter' to get the current counter across all servers");
+    } else if(command.match(/\bgetwtfcounter\b/) != null) {
+      message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString()));
+    } else if(command.match(/\bgg\b/) != null && command.match(/\bwtf\b/) != null) {
+      message.channel.send("gg wtf");
+      num = 0;
+    } else if(command.match(/\bgg\b/) != null) {
+      message.channel.send("gg");
+      num = 1;
+    } else if(command.match(/\bwtf\b/) != null) {
+      message.channel.send("wtf");
+      num = 2;
+    } else if(command.match(/\bbog\b/) != null || command.match(/\bb o g\b/) != null || command.match(/\bpog\b/) != null || command.match(/\bpoggers\b/) != null || command.match(/\bpogger\b/) != null) {
+      message.channel.send("b o g");
+      num = 3;
+    } else if(command.match(/\beda\b/) != null) {
+      message.channel.send("Eustis does your ass");
+    }
 
-  // Saves new count to json file
-  if(num != -1) {
-    if (!count[num]) count[num] = { messageCount: 1 };
-    else count[num].messageCount++;
-    try {
-      fs.writeFileSync('./count.json', JSON.stringify(count));
-    } catch(err) {
-      console.error(err);
+    if(command.endsWith("when")) {
+      message.channel.send("wait when");
+    }
+
+    // Saves new count to json file
+    if(num != -1) {
+      if (!count[num]) count[num] = { messageCount: 1 };
+      else count[num].messageCount++;
+      try {
+        fs.writeFileSync('./count.json', JSON.stringify(count));
+      } catch(err) {
+        console.error(err);
+      }
     }
   }
 });
