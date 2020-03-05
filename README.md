@@ -1,6 +1,6 @@
 # Killamocingbot
 
-The most pointless Discord bot ever
+Killa but as a Discord bot 
 
 ## Add it to your server:
   https://discordapp.com/oauth2/authorize?&client_id=684867671552294994&scope=bot&permissions=8
