@@ -1,4 +1,4 @@
-# DiscordWtfBot
+# Killamocingbot
 
 The most pointless Discord bot ever
 

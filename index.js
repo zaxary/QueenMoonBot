@@ -4,9 +4,7 @@ const fs = require('fs');
 const count = require('./count.json');
 const config = require("./config.json");
 
-
 const client = new Discord.Client();
-
 
 // Run on start
 client.on("ready", () => {
@@ -34,14 +32,14 @@ client.on("guildDelete", guild => {
   client.user.setActivity(`ggwtf help`);
 });
 
-
 // Runs when a new message is sent on a server
 client.on("message", async message => {
 
   // Don't respond to bots
-  if(message.author.bot) return;
-  let num = -1;
+  if(message.author.bot)
+    return;
 
+  let num = -1;
 
   const command = message.content.toLowerCase();
 
@@ -67,8 +65,12 @@ client.on("message", async message => {
     message.channel.send("Eustis does your ass");
   }
 
+  // Randomly send message
   if(Math.floor(Math.random() * 100) < 10) {
-    message.channel.send("wait when")
+    if(Math.floor(Math.random() * 10) < 5)
+      message.channel.send("wait when");
+    else
+      message.channel.send("when");
   }
 
   // Saves new count to json file
