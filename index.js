@@ -34,7 +34,8 @@ client.on("guildDelete", guild => {
 
 // Runs when a new message is sent on a server
 client.on("message", async message => {
-  if(message.channel.id === '684979501566001206') {
+  // Counting game stuff
+  if(message.channel.id === '658841173934342174') {
       message.channel.messages.fetch({ limit: 2 }).then(messages => {
 
         const lastMessage = messages.array();
@@ -44,12 +45,16 @@ client.on("message", async message => {
         }
 
         if(Number(lastMessage[0].content) - 1 != Number(lastMessage[1].content)) {
+          // Add Can't Count role and delete last message if number isn't next in counting game
+          const tMember = lastMessage[0].member.guild.roles.cache.find(role => role.name === "Can't Count");
+          lastMessage[0].member.roles.add(tMember).catch(console.error);
           message.delete(lastMessage[0]);
-          console.log("NOT NEXT");
         }
       }).catch(err => {
         console.error(err)
       })
+
+      return;
   }
 
   // Don't respond to bots
