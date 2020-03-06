@@ -16,6 +16,7 @@ By default, the `wtf`, `gg`, `wtf gg`, `b o g`, and `when` commands only have a 
 * `killa no anime` to get the no anime picture
 * `killa hackathon` to get the done with hackathons picture
 * `killa usercount` to see how many users are currently in the server
+* `killa say ...` to have the bot say something
 
 ## To run the bot yourself
 make a file named `config.json` in the root directory of the repo. Head over to the [Discord Developer Portal](https://discordapp.com/developers/applications/me) and get a token for a new bot. Place that token in `config.json` in the following format:

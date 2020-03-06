@@ -61,7 +61,7 @@ client.on("message", async message => {
     override = true;
 
   if(command.match(/\bkilla help\b/) != null) {
-    message.channel.send("Commands:\n```* `getKillaCounter` to get the current counter across all servers\n* add `killa` to the start of your message to override the 33% chance of the bot responding\n* `killa no anime` to get the no anime picture\n* `killa hackathon` to get the done with hackathons picture\n* `killa usercount` to see how many users are currently in the server```");
+    message.channel.send("Commands:\n```* `getKillaCounter` to get the current counter across all servers\n* add `killa` to the start of your message to override the 33% chance of the bot responding\n* `killa no anime` to get the no anime picture\n* `killa hackathon` to get the done with hackathons picture\n* `killa usercount` to see how many users are currently in the server\n* `killa say ...` to have the bot say something```");
   } else if(command.match(/\bgetkillacounter\b/) != null) {
     message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString(), "\neda count: ", count[4]["messageCount"].toString()));
   } else if(command.match(/\busercount\b/) != null) {
@@ -75,6 +75,11 @@ client.on("message", async message => {
       message.channel.send("https://preview.redd.it/gsqw5ib2xib11.jpg?width=720&auto=webp&s=c13201a160e6f38594bb09beccfad67f56fc1cc9");
     else if(command.match(/\bhackathon\b/) != null)
       message.channel.send("https://cdn.discordapp.com/attachments/654784388197908500/675113678856781834/Screenshot_20200102-213727_Discord.png");
+    else if(command.match(/\bsay\b/)) {
+      message.channel.send(message.content.replace("killa say", ""));
+      message.delete(message);
+    }
+
   }
 
 
