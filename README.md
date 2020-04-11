@@ -19,5 +19,7 @@ make a file named `config.json` in the root directory of the repo. Head over to 
 }
 ```
 
+then run the bot by running `node index.js` in a terminal. To run even after closing the terminal window (ie. on an AWS EC2 instance) use the command `forever start index.js`.
+
 ## Contribute
 Make some contributions, it's open source.
