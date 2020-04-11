@@ -27,19 +27,30 @@ client.on("guildDelete", guild => {
 // Runs when a new message is sent on a server
 client.on("message", async message => {
   // Counting game stuff
-  if(message.channel.id === '698313651186040923') {
+  if(message.channel.id === '654783232969277453') {
       message.channel.messages.fetch({ limit: 2 }).then(messages => {
 
+        // Delete bot messages
         const lastMessage = messages.array();
         if(lastMessage[0].author.bot || lastMessage[1].author.bot) {
           message.delete(lastMessage[1]);
           return;
         }
 
+        // If past 2 messages sent by same user, delete newest
+        if(lastMessage[0].member.id == lastMessage[1].member.id) {
+          message.delete(lastMessage[1]);
+          return;
+        }
+
+        // If next number not old number + 1
         if(Number(lastMessage[0].content).toString() !== lastMessage[0].content || Number(lastMessage[0].content) - 1 != Number(lastMessage[1].content)) {
-          // Add Can't Count role and delete last message if number isn't next in counting game
-          const tMember = lastMessage[0].member.guild.roles.cache.find(role => role.name === "Can't Count");
-          lastMessage[0].member.roles.add(tMember).catch(console.error);
+          // Add Can't Count role and delete last message if number isn't next in counting game and > 1500 ms between the two messages
+          if(Math.abs(lastMessage[0].createdTimestamp - lastMessage[1].createdTimestamp) > 1500) {
+            const tMember = lastMessage[0].member.guild.roles.cache.find(role => role.name === "Can't Count");
+            lastMessage[0].member.roles.add(tMember).catch(console.error);
+          }
+
           message.delete(lastMessage[0]);
           return;
         }
@@ -73,6 +84,8 @@ client.on("message", async message => {
     if(command.match(/\bhackathon\b/) != null) {
       message.channel.send("https://cdn.discordapp.com/attachments/654784388197908500/675113678856781834/Screenshot_20200102-213727_Discord.png");
       return;
+    } else if(command.match(/\bhelp\b/) != null) {
+      message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen usercount` to see how many users are currently in the server```");
     }
   }
 });
