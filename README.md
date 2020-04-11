@@ -1,10 +1,12 @@
 # QueenMoonBot
 
-Killa but as a Discord bot
+A counting mod bot for the UIUC 2024 Discord server
 
 ## Add it to your server:
   https://discordapp.com/oauth2/authorize?&client_id=684867671552294994&scope=bot&permissions=8
 
+
+# NOTE - these commands don't work anymore
 
 ## Commands
 By default, the `wtf`, `gg`, `wtf gg`, `b o g`, and `when` commands only have a 33% chance of appearing. This can be overridden by adding `killa` to the beginning of your message. Other commands, such as `killa help`, `killa usercount`, `killa no anime`, `killa hackathon`, and `getKillaCounter` appear every time a message with one of those commands is sent.
@@ -26,3 +28,4 @@ make a file named `config.json` in the root directory of the repo. Head over to 
   "token": "YOUR_TOKEN_HERE"
 }
 ```
+

@@ -9,25 +9,25 @@ const client = new Discord.Client();
 // Run on start
 client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
-  client.user.setActivity(`killa help`);
+  client.user.setActivity(`queen help`);
 });
 
 // Runs on join new server
 client.on("guildCreate", guild => {
   console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-  client.user.setActivity(`killa help`);
+  client.user.setActivity(`queen help`);
 });
 
 // Runs on leave server
 client.on("guildDelete", guild => {
   console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
-  client.user.setActivity(`killa help`);
+  client.user.setActivity(`queen help`);
 });
 
 // Runs when a new message is sent on a server
 client.on("message", async message => {
   // Counting game stuff
-  if(message.channel.id === '658841173934342174') {
+  if(message.channel.id === '698313651186040923') {
       message.channel.messages.fetch({ limit: 2 }).then(messages => {
 
         const lastMessage = messages.array();
@@ -36,14 +36,16 @@ client.on("message", async message => {
           return;
         }
 
-        if(Number(lastMessage[0].content) - 1 != Number(lastMessage[1].content)) {
+        if(Number(lastMessage[0].content).toString() !== lastMessage[0].content || Number(lastMessage[0].content) - 1 != Number(lastMessage[1].content)) {
           // Add Can't Count role and delete last message if number isn't next in counting game
           const tMember = lastMessage[0].member.guild.roles.cache.find(role => role.name === "Can't Count");
           lastMessage[0].member.roles.add(tMember).catch(console.error);
           message.delete(lastMessage[0]);
+          return;
         }
       }).catch(err => {
-        console.error(err)
+        console.error(err);
+        return;
       })
 
       return;
@@ -57,67 +59,20 @@ client.on("message", async message => {
   const command = message.content.toLowerCase();
   let override = false;
 
-  if (command.startsWith("killa"))
+  if (command.startsWith("queen"))
     override = true;
 
-  if(command.match(/\bkilla help\b/) != null) {
-    message.channel.send("Commands:\n```* `getKillaCounter` to get the current counter across all servers\n* add `killa` to the start of your message to override the 33% chance of the bot responding\n* `killa no anime` to get the no anime picture\n* `killa hackathon` to get the done with hackathons picture\n* `killa usercount` to see how many users are currently in the server\n* `killa say ...` to have the bot say something```");
-  } else if(command.match(/\bgetkillacounter\b/) != null) {
-    message.channel.send("gg wtf count: ".concat(count[0]["messageCount"], "\ngg count: ", count[1]["messageCount"].toString(), "\nwtf count: ", count[2]["messageCount"].toString(), "\nb o g count: ", count[3]["messageCount"].toString(), "\neda count: ", count[4]["messageCount"].toString()));
-  } else if(command.match(/\busercount\b/) != null) {
+  if(command.match(/\busercount\b/) != null) {
     const userAmnt = client.guilds.cache.get('654783232969277450').memberCount;
     message.channel.send("There are currently " + userAmnt + " people in this server");
     console.log(client.guilds.cache.get('654783232969277450').memberCount);
+    return;
   }
 
   if(override) {
-    if(command.match(/\bno anime\b/) != null)
-      message.channel.send("https://preview.redd.it/gsqw5ib2xib11.jpg?width=720&auto=webp&s=c13201a160e6f38594bb09beccfad67f56fc1cc9");
-    else if(command.match(/\bhackathon\b/) != null)
+    if(command.match(/\bhackathon\b/) != null) {
       message.channel.send("https://cdn.discordapp.com/attachments/654784388197908500/675113678856781834/Screenshot_20200102-213727_Discord.png");
-    else if(command.match(/\bsay\b/)) {
-      message.channel.send(message.content.replace("killa say", ""));
-      message.delete(message);
-    }
-
-  }
-
-
-  if(override || Math.floor(Math.random() * 15) < 5) {
-    let num = -1;
-
-
-    // All the cases
-    if(command.match(/\bgg\b/) != null && command.match(/\bwtf\b/) != null) {
-      message.channel.send("gg wtf");
-      num = 0;
-    } else if(command.match(/\bgg\b/) != null) {
-      message.channel.send("gg");
-      num = 1;
-    } else if(command.match(/\bwtf\b/) != null) {
-      message.channel.send("wtf");
-      num = 2;
-    } else if(command.match(/\bbog\b/) != null || command.match(/\bb o g\b/) != null || command.match(/\bpog\b/) != null || command.match(/\bpoggers\b/) != null || command.match(/\bpogger\b/) != null) {
-      message.channel.send("b o g");
-      num = 3;
-    } else if(command.match(/\beda\b/) != null) {
-      num = 4;
-      message.channel.send("Eustis does your ass");
-    }
-
-    if(command.endsWith("when")) {
-      message.channel.send("wait when");
-    }
-
-    // Saves new count to json file
-    if(num != -1) {
-      if (!count[num]) count[num] = { messageCount: 1 };
-      else count[num].messageCount++;
-      try {
-        fs.writeFileSync('./count.json', JSON.stringify(count));
-      } catch(err) {
-        console.error(err);
-      }
+      return;
     }
   }
 });
