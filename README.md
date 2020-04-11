@@ -1,4 +1,4 @@
-# Killamocingbot
+# QueenMoonBot
 
 Killa but as a Discord bot
 
