@@ -1,7 +1,7 @@
 {
-  "name": "gg wtf",
+  "name": "QueenMoonBot",
   "version": "1.0.0",
-  "description": "A bot that just says gg and wtf",
+  "description": "A bot for the UIUC 2024 Discord server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
