@@ -27,28 +27,7 @@ client.on("guildDelete", guild => {
 // Runs when a new message is sent on a server
 client.on("message", async message => {
   // Counting game stuff
-  var responses = ['It is certain.',
-            'It is decidedly so.',
-            'Without a doubt.',
-            'Yes - definitely.',
-            'You may rely on it.',
-            'As I see it, yes.',
-            'Most likely.',
-            'Outlook good.',
-            'Yes.',
-            'Signs point to yes.',
-            'Reply hazy, try again.',
-            'Ask again later.',
-            'Better not tell you now.',
-            'Cannot predict now.',
-            'Concentrate and ask again.',
-            "Don't count on it.",
-            'My reply is no.',
-            'My sources say no.',
-            'Outlook not so good',
-            'Very doubtful'];
-
-  if(message.channel.id === '698313651186040923') {
+  if(message.channel.id === '654783232969277453') {
       message.channel.messages.fetch({ limit: 2 }).then(messages => {
 
         // Delete bot messages
@@ -109,11 +88,15 @@ client.on("message", async message => {
       message.channel.send("https://cdn.discordapp.com/attachments/669726484772159488/701247357001400370/unknown.png");
       return;
     } else if(command.match(/\bhelp\b/) != null) {
+<<<<<<< HEAD
       message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen usercount` to see how many users are currently in the server\n* `queen 8ball [message]` to get an 8ball reply```");
     } else if(command.match(/\b8ball\b/) != null && message.channel.id === '654838387160907777') {
       var rand = Math.floor(Math.random() * 20);
       var question =
       message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
+=======
+      message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen usercount` to see how many users are currently in the server```");
+>>>>>>> parent of b793803... 8ball
     }
   }
 });
