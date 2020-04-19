@@ -105,9 +105,12 @@ client.on("message", async message => {
     if(command.match(/\bhackathon\b/) != null) {
       message.channel.send("https://cdn.discordapp.com/attachments/654784388197908500/675113678856781834/Screenshot_20200102-213727_Discord.png");
       return;
+    } else if(command.match(/\bgc\b/) != null) {
+      message.channel.send("https://cdn.discordapp.com/attachments/669726484772159488/701247357001400370/unknown.png");
+      return;
     } else if(command.match(/\bhelp\b/) != null) {
       message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen usercount` to see how many users are currently in the server\n* `queen 8ball [message]` to get an 8ball reply```");
-    } else if(command.match(/\b8ball\b/) != null) {
+    } else if(command.match(/\b8ball\b/) != null && message.channel.id === '654838387160907777') {
       var rand = Math.floor(Math.random() * 20);
       var question =
       message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
