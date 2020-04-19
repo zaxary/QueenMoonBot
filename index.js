@@ -27,7 +27,7 @@ client.on("guildDelete", guild => {
 // Runs when a new message is sent on a server
 client.on("message", async message => {
   // Counting game stuff
-  if(message.channel.id === '654783232969277453') {
+  if(message.channel.id === '698313651186040923') {
       message.channel.messages.fetch({ limit: 2 }).then(messages => {
 
         // Delete bot messages
@@ -88,15 +88,11 @@ client.on("message", async message => {
       message.channel.send("https://cdn.discordapp.com/attachments/669726484772159488/701247357001400370/unknown.png");
       return;
     } else if(command.match(/\bhelp\b/) != null) {
-<<<<<<< HEAD
-      message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen usercount` to see how many users are currently in the server\n* `queen 8ball [message]` to get an 8ball reply```");
+      message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)```");
     } else if(command.match(/\b8ball\b/) != null && message.channel.id === '654838387160907777') {
       var rand = Math.floor(Math.random() * 20);
-      var question =
-      message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
-=======
+      var question = message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
       message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen usercount` to see how many users are currently in the server```");
->>>>>>> parent of b793803... 8ball
     }
   }
 });
