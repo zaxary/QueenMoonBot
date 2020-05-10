@@ -79,29 +79,58 @@ client.on("guildDelete", guild => {
 //   }
 // });
 
+async function getMessagesWithImages(channel, limit = 500) {
+  const sum_messages = [];
+  let last_id;
+
+  while (true) {
+      const options = { limit: 100 };
+      if (last_id) {
+          options.before = last_id;
+      }
+
+      const messages = await channel.messages.fetch(options);
+      sum_messages.push(...messages.array());
+      last_id = messages.last().id;
+
+      if (messages.size != 100 || sum_messages >= limit) {
+          break;
+      }
+  }
+
+
+  const output = [];
+  for(let i = 0; i < sum_messages.length; i++) {
+    if(sum_messages[i].attachments.size > 0)
+      output.push(sum_messages[i]);
+  }
+
+  return output;
+}
+
 // Runs when a new message is sent on a server
 client.on("message", async message => {
 
   var responses = ['It is certain.',
-            'It is decidedly so.',
-            'Without a doubt.',
-            'Yes - definitely.',
-            'You may rely on it.',
-            'As I see it, yes.',
-            'Most likely.',
-            'Outlook good.',
-            'Yes.',
-            'Signs point to yes.',
-            'Reply hazy, try again.',
-            'Ask again later.',
-            'Better not tell you now.',
-            'Cannot predict now.',
-            'Concentrate and ask again.',
-            "Don't count on it.",
-            'My reply is no.',
-            'My sources say no.',
-            'Outlook not so good',
-            'Very doubtful'];
+                    'It is decidedly so.',
+                    'Without a doubt.',
+                    'Yes - definitely.',
+                    'You may rely on it.',
+                    'As I see it, yes.',
+                    'Most likely.',
+                    'Outlook good.',
+                    'Yes.',
+                    'Signs point to yes.',
+                    'Reply hazy, try again.',
+                    'Ask again later.',
+                    'Better not tell you now.',
+                    'Cannot predict now.',
+                    'Concentrate and ask again.',
+                    "Don't count on it.",
+                    'My reply is no.',
+                    'My sources say no.',
+                    'Outlook not so good',
+                    'Very doubtful'];
 
 
   // Counting game stuff
@@ -172,12 +201,22 @@ client.on("message", async message => {
     } else if(command.match(/\bhead\b/) != null) {
       message.channel.send({files: ['https://cdn.discordapp.com/attachments/669726484772159488/708103493918916709/unknown.png']});
       return;
-      
+    } else if(command.match(/\bno anime\b/) != null) {
+      message.channel.send({files: ['https://cdn.discordapp.com/attachments/697639057592811650/708536846531035226/image0.jpg']});
+      return; 
     } else if(command.match(/\bcontribute\b/) != null) {
       message.channel.send("https://github.com/s-hfarooq/QueenMoonBot");
       return;
+    } else if(command.match(/\bquote\b/) != null) {
+      getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
+        let rand = Math.floor(Math.random() * output.length);
+        // console.log(output.length);
+        // console.log(output[rand].attachments);
+        // console.log(output[rand].attachments.first().url);
+        message.channel.send({files: [output[rand].attachments.first().url]});
+      });
     } else if(command.match(/\bhelp\b/) != null) {
-      message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)```");
+      message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)```");
     } else if(command.match(/\b8ball\b/) != null) {
       if(message.channel.id === '654838387160907777') {
         var rand = Math.floor(Math.random() * 20);
