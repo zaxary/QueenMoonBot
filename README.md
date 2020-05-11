@@ -17,6 +17,7 @@ A bot for the UIUC 2024 Discord server
 * `queen usercount` to see how many users are currently in the server
 * `queen contribute` to get a like to the GitHub repo
 * `queen 8ball [message]` to get an 8ball reply (only works in #spam)
+* `queen thirst` to remind your friends to H Y D R A T E
 
 
 ## To run the bot yourself
