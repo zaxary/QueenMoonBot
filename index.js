@@ -233,11 +233,10 @@ client.on("message", async message => {
         var rand = Math.floor(Math.random() * responses.Length);
         message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
       }
-      }
-      else if(command.match(/\bthirst\b/) !=null) {
+    } else if(command.match(/\bthirst\b/) !=null) {
         var rand = Math.floor(Math.random() * reminders.Length);
         message.channel.send(reminders[rand]);
-      }
+    }
   }
 });
 
