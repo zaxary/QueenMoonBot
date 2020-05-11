@@ -230,11 +230,11 @@ client.on("message", async message => {
       message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)```");
     } else if(command.match(/\b8ball\b/) != null) {
       if(message.channel.id === '654838387160907777') {
-        var rand = Math.floor(Math.random() * responses.Length);
+        var rand = Math.floor(Math.random() * responses.length);
         message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
       }
     } else if(command.match(/\bthirst\b/) !=null) {
-        var rand = Math.floor(Math.random() * reminders.Length);
+        var rand = Math.floor(Math.random() * reminders.length);
         message.channel.send(reminders[rand]);
     }
   }
