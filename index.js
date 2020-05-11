@@ -45,7 +45,7 @@ client.on("guildDelete", guild => {
 //   member = reaction.message.guild.member(user)
 //   console.log(member.id);
 //   if (!member.roles.cache.some(r => r.name === "Prospective Student")  && !member.roles.cache.some(r => r.name === "Admitted Student")){
-    
+
 //     return;
 //   }
 
@@ -57,14 +57,14 @@ client.on("guildDelete", guild => {
 //   console.log("USER CREDENTIALS PASS");
 //   if(reaction.emoji.name == 'blockI') {
 //     console.log("blocki react");
-//     member.roles.add(committed_role);   
+//     member.roles.add(committed_role);
 
 //     member.roles.remove(admitted_role).then(console.log).catch(console.error);
 //     member.roles.remove(prospective_role).then(console.log).catch(console.error);
 
-//     // if (!member.roles.cache.some(r => r.id === "654828722050039808") && 
-//     //     !member.roles.cache.some(r => r.id === "654828844133384222") && 
-//     //     !member.roles.cache.some(r => r.id === "654828941072400393") && 
+//     // if (!member.roles.cache.some(r => r.id === "654828722050039808") &&
+//     //     !member.roles.cache.some(r => r.id === "654828844133384222") &&
+//     //     !member.roles.cache.some(r => r.id === "654828941072400393") &&
 //     //     !member.roles.cache.some(r => r.id === "655176104251883561")) {
 //     //   member.user.send("Don't forget to request your roles in #set_roles_here!\n**ex: Admitted, Grainger, OOS, ElecEng @ESC**").catch(console.error);
 //     //   return;
@@ -203,7 +203,7 @@ client.on("message", async message => {
       return;
     } else if(command.match(/\bno anime\b/) != null) {
       message.channel.send({files: ['https://cdn.discordapp.com/attachments/697639057592811650/708536846531035226/image0.jpg']});
-      return; 
+      return;
     } else if(command.match(/\bcontribute\b/) != null) {
       message.channel.send("https://github.com/s-hfarooq/QueenMoonBot");
       return;
@@ -216,7 +216,7 @@ client.on("message", async message => {
         message.channel.send({files: [output[rand].attachments.first().url]});
       });
     } else if(command.match(/\bhelp\b/) != null) {
-      message.channel.send("Commands:\n```* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)```");
+      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)```");
     } else if(command.match(/\b8ball\b/) != null) {
       if(message.channel.id === '654838387160907777') {
         var rand = Math.floor(Math.random() * 20);
