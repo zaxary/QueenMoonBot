@@ -131,7 +131,18 @@ client.on("message", async message => {
                     'My sources say no.',
                     'Outlook not so good',
                     'Very doubtful'];
-
+  
+  // reminders for thirst command
+  
+  var reminders = ['A friendly reminder to stay hydrated.',
+                   'Quench your thirst.',
+                   'Did you drink enough water today?',
+                   'BEGONE',
+                   'stfu',
+                   'u thirsty hoe',
+                   'It is important to drink 8 glasses of water a day.',
+                   "goddammit i'm running out of creative ways to insult you people"];
+                   
 
   // Counting game stuff
   if(message.channel.id === '698313651186040923') {
@@ -219,9 +230,12 @@ client.on("message", async message => {
       message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)```");
     } else if(command.match(/\b8ball\b/) != null) {
       if(message.channel.id === '654838387160907777') {
-        var rand = Math.floor(Math.random() * 20);
+        var rand = Math.floor(Math.random() * responses.length);
         message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
       }
+    } else if(command.match(/\bthirst\b/) !=null) {
+        var rand = Math.floor(Math.random() * reminders.length);
+        message.channel.send(reminders[rand]);
     }
   }
 });
