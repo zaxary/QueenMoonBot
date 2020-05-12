@@ -222,10 +222,15 @@ client.on("message", async message => {
       message.channel.send({files: ['https://cdn.discordapp.com/attachments/654784481340686346/709596915485900890/IMG_9784.jpg']});
       return;
     } else if(command.match(/\bquote\b/) != null) {
-      getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
-        let rand = Math.floor(Math.random() * output.length);
-        message.channel.send({files: [output[rand].attachments.first().url]});
-      });
+        if (!(message.channel.id === '669726484772159488' || message.channel.id === '654784430409252904')) {
+
+          getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
+          let rand = Math.floor(Math.random() * output.length);
+          message.channel.send({files: [output[rand].attachments.first().url]});});
+        } else {
+            message.channel.send("That command cannot be used in this channel!");
+        }
+      }
     }else if(command.match(/\bbrownout\b/) != null) {
       if(message.channel.id === '697639057592811650') {
         getMessagesWithImages(client.channels.cache.get("697639057592811650")).then(output => {
