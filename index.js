@@ -131,9 +131,9 @@ client.on("message", async message => {
                     'My sources say no.',
                     'Outlook not so good',
                     'Very doubtful'];
-  
+
   // reminders for thirst command
-  
+
   var reminders = ['A friendly reminder to stay hydrated.',
                    'Quench your thirst.',
                    'Did you drink enough water today?',
@@ -142,7 +142,7 @@ client.on("message", async message => {
                    'u thirsty hoe',
                    'It is important to drink 8 glasses of water a day.',
                    "goddammit i'm running out of creative ways to insult you people"];
-                   
+
 
   // Counting game stuff
   if(message.channel.id === '698313651186040923') {
@@ -218,20 +218,31 @@ client.on("message", async message => {
     } else if(command.match(/\bcontribute\b/) != null) {
       message.channel.send("https://github.com/s-hfarooq/QueenMoonBot");
       return;
+    } else if(command.match(/\bmatt\b/) != null) {
+      message.channel.send({files: ['https://cdn.discordapp.com/attachments/654784481340686346/709596915485900890/IMG_9784.jpg']});
+      return;
     } else if(command.match(/\bquote\b/) != null) {
       getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
         let rand = Math.floor(Math.random() * output.length);
-        // console.log(output.length);
-        // console.log(output[rand].attachments);
-        // console.log(output[rand].attachments.first().url);
         message.channel.send({files: [output[rand].attachments.first().url]});
       });
+    }else if(command.match(/\bbrownout\b/) != null) {
+      if(message.channel.id === '697639057592811650') {
+        getMessagesWithImages(client.channels.cache.get("697639057592811650")).then(output => {
+          let rand = Math.floor(Math.random() * output.length);
+          message.channel.send({files: [output[rand].attachments.first().url]});
+        });
+      } else {
+        message.channel.send("That command can only be used in <#697639057592811650>");
+      }
     } else if(command.match(/\bhelp\b/) != null) {
-      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)```");
+      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)```");
     } else if(command.match(/\b8ball\b/) != null) {
       if(message.channel.id === '654838387160907777') {
         var rand = Math.floor(Math.random() * responses.length);
         message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
+      } else {
+        message.channel.send("That command can only be used in <#654838387160907777>");
       }
     } else if(command.match(/\bthirst\b/) !=null) {
         var rand = Math.floor(Math.random() * reminders.length);
