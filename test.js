@@ -146,7 +146,10 @@ client.on("message", async message => {
     'It is important to drink 8 glasses of water a day.',
     "goddammit i'm running out of creative ways to insult you people"
   ];
+  
+  //rng generator
 
+  Random randIndex = new Random();
 
   // Counting game stuff
   if (message.channel.id === '698313651186040923') {
@@ -235,18 +238,12 @@ client.on("message", async message => {
         files: ['https://cdn.discordapp.com/attachments/654784481340686346/709596915485900890/IMG_9784.jpg']
       });
       return;
-    } else if (command.match(/\billinois\b/) != null) {
-      message.channel.send({
-        files: ['https://media.discordapp.net/attachments/654785556215103488/692035239366885416/tempFileForShare_20200302-175024.png?width=546&height=679']
-      });
-      return;
     } else if (command.match(/\bquote\b/) != null) {
       if (!(message.channel.id === '669726484772159488' || message.channel.id === '654784430409252904')) {
 
         getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
-          let rand = Math.floor(Math.random() * output.length);
           message.channel.send({
-            files: [output[rand].attachments.first().url]
+            files: [output[randIndex.nextInt(0,output.length)].attachments.first().url]
           });
         });
       } else {
@@ -264,17 +261,17 @@ client.on("message", async message => {
         message.channel.send("That command can only be used in <#697639057592811650>");
       }
     } else if (command.match(/\bhelp\b/) != null) {
-      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)```");
+      message.channel.send(File.ReadAllText("commands.txt"));
     } else if (command.match(/\b8ball\b/) != null) {
       if (message.channel.id === '654838387160907777') {
-        var rand = Math.floor(Math.random() * responses.length);
-        message.channel.send("Question: " + message.content.substring(12) + "\nAnswer: " + responses[rand]);
+        //part of message to be removed
+        String commandString = "queen 8ball ";
+        message.channel.send("Question: " + message.content.substring(commandString.length) + "\nAnswer: " + responses[randIndex.nextInt(0,responses.length)]);
       } else {
         message.channel.send("That command can only be used in <#654838387160907777>");
       }
     } else if (command.match(/\bthirst\b/) != null) {
-      var rand = Math.floor(Math.random() * reminders.length);
-      message.channel.send(reminders[rand]);
+      message.channel.send(reminders[randIndex.nextInt(0,reminders.length)]);
     }
   }
 });
