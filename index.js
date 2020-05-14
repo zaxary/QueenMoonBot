@@ -344,7 +344,7 @@ client.on("message", async message => {
       //ex: queen class cs-125
 
       //check for course in dictionary/map
-      var words = message.content.replace('queen class ', '').split("-");
+      var words = command.replace('queen class ', '').split("-");
       var classCode = words[0].toLowerCase()+words[1];
       if (classCode in courseCache){
         //notify on console
@@ -358,7 +358,7 @@ client.on("message", async message => {
           //notify on console
           console.log("Course not in cache. Fetching...");
           //splits into subject code & number
-          var words = message.content.split("-");
+          var words = command.split("-");
           var userMessage = words[0].replace('queen class ', '');
           subject = userMessage.toUpperCase();
           classNum = words[1];
@@ -404,7 +404,7 @@ client.on("message", async message => {
             message.channel.send("Description: "+classDescription);
             //message.channel.send("Dev Data: "+totalGPA+", Total GPA & "+sumGPAs+" GPA's...");
             console.log("Course fetched.");
-            
+
             //SAVE TO MAP:
             var courseData = [className, credits, Number(gpa.toFixed(2)).toString(), classDescription];
             courseCache[classCode] = courseData;
@@ -425,7 +425,7 @@ client.on("message", async message => {
     } else if (command.match(/\lofi\b/) != null) {
         message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     }
-   } 
+   }
 }
 );
 
