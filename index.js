@@ -4,8 +4,12 @@ const fs = require('fs');
 const count = require('./count.json');
 const config = require("./config.json");
 
-//jQuery-CSV requirement
-const csv = require('./jquery.csv.js');
+//CSV parser
+const csv = require('csv-parser');
+//CSV data (filled later on)
+var allCSVdata = [];
+var classes = [];
+var gpaData = [];
 
 var brownoutOut = [];
 var quotesOut = [];
@@ -13,6 +17,43 @@ var quotesOut = [];
 const client = new Discord.Client({
     partials: ['MESSAGE']
 });
+
+
+
+
+//function to read CSV data
+function getCSVdata(){
+  //get classes data from CSV file
+  var classes = []
+  fs.createReadStream('2020-fa.csv')
+     .pipe(csv())
+     .on('data', (row) => {
+       classes.push(row);
+       console.log(row);
+     })
+     .on('end', () => {
+       console.log('CSV processed.')
+     })
+  //get gpa data from CSV file
+  var gpaData = []
+  fs.createReadStream('uiuc-gpa-dataset.csv')
+     .pipe(csv())
+     .on('data', (row) => {
+       gpaData.push(row);
+       console.log(row);
+     })
+     .on('end', () => {
+       console.log('CSV processed.')
+     })
+  //return data as an array of arrays
+  var data = []
+  data.push(classes);
+  data.push(gpaData);
+  return data;
+}
+
+
+
 
 // Run on start
 client.on("ready", () => {
@@ -27,6 +68,13 @@ client.on("ready", () => {
     });
 
     console.log("images cached");
+
+    //set CSV data variables
+    console.log("Reading CSV data...")
+    allCSVdata = getCSVdata();
+    classes = allCSVdata[0];
+    gpaData = allCSVdata[1];
+    console.log("ALL CSV DATA IS NOW SAVED!");
 });
 
 // Runs on join new server
@@ -212,6 +260,8 @@ client.on("message", async message => {
 
   let override = false;
 
+
+
   // Make sure message starts with 'queen'
   if (command.startsWith("queen"))
     override = true;
@@ -288,25 +338,25 @@ client.on("message", async message => {
     } else if (command.match(/\bclass\b/) != null) {
       //ex: queen class cs-125
       try{
-        //get CSV for class data
-        var classesCSV = '2020-fa.csv';
-        //get CSV for GPA data
-        var gpaDataCSV = 'uiuc-gpa-dataset.csv';
-        //convert CSV's to JSON objects
-        var classes = $.csv.toObjects(classesCSV);
-        var gpaData = $.csv.toObjects(gpaDataCSV);
-        //splits into subject code & number (goes to upper case to avoid case-sensitivity issues)
-        var subject, classNum = message.content.split("-")
-        subject = subject.toUpperCase();
+        //splits into subject code & number
+        var words = message.content.split("-")
+        var userMessage = words[0].replace('queen class ', '');
+        subject = userMessage.toUpperCase();
+        classNum = words[1];
         //get class info
         var className = "N/A";
         var credits = 0;
+        var classDescription = "";
         for (var i = 0; i < classes.length; i++){
+          console.log(classes[i]);
+          console.log(classes[i].Subject);
           if (classes[i].Subject == subject && classes[i].Number == classNum){
             //set name of class
             className = classes[i].Name;
             //set credit hour amount
             credits = classes[i].Credit;
+            //set description
+            classDescription = classes[i].Description;
           }
         }
         //recent avg. GPA (only counts 2019 classes)
@@ -319,21 +369,24 @@ client.on("message", async message => {
           }
         }
         //calculate gpa
-        var totalRelevantGPA = 0;
+        var totalGPA = 0;
+        var sumGPAs = 0;
         for (var i = 0; i < relevantClassesForGPA.length; i++){
           c = relevantClassesForGPA[i];
-          var sumGPAs = c.Aplus+c.Aa+c.Aminus+c.Bplus+c.Bb+c.Bminus+c.Cplus+c.Cc+c.Cminus+c.Dplus+c.Dd+c.Dminus;
-          var totalGPA = ((c.Aplus + c.Aa)*4)+(c.Aminus*3.67)+(c.Bplus*3.33)+(c.Bb*3)+(c.Bminus*2.67)+(c.Cplus*2.33)+(c.Cc*2)+(c.Cminus*1.67)+(c.Dplus*1.33)+(c.Dd*1)+(c.Dminus*0.67);
-          var avgGPA = totalGPA / sumGPAs;
-          totalRelevantGPA += avgGPA;
+          var gpasum = parseFloat(c.Aplus)+parseFloat(c.Aa)+parseFloat(c.Aminus)+parseFloat(c.Bplus)+parseFloat(c.Bb)+parseFloat(c.Bminus)+parseFloat(c.Cplus)+parseFloat(c.Cc)+parseFloat(c.Cminus)+parseFloat(c.Dplus)+parseFloat(c.Dd)+parseFloat(c.Dminus);
+          var gpatotal = ((parseFloat(c.Aplus) + parseFloat(c.Aa))*4)+(parseFloat(c.Aminus)*3.67)+(parseFloat(c.Bplus)*3.33)+(parseFloat(c.Bb)*3)+(parseFloat(c.Bminus)*2.67)+(parseFloat(c.Cplus)*2.33)+(parseFloat(c.Cc)*2)+(parseFloat(c.Cminus)*1.67)+(parseFloat(c.Dplus)*1.33)+(parseFloat(c.Dd*1))+(parseFloat(c.Dminus)*0.67);
+          totalGPA += gpatotal;
+          sumGPAs += gpasum;
         }
-        gpa = totalRelevantGPA / relevantClassesForGPA.length;
+        gpa = totalGPA / sumGPAs;
         //send response (only if class name isn't 'N/A', as this would indicate that it couldn't be found in the CSV)
         if (className != "N/A"){
-          message.channel.send(message.content+": "+className+" -- "+credits+" -- Offered in Fall 2020 -- Recent Avg. GPA: "+gpa);
+          message.channel.send(userMessage+"-"+classNum+": "+className+" -- "+credits+" -- Offered in Fall 2020 -- Recent Avg. GPA: "+Number(gpa.toFixed(2)));
+          message.channel.send("Description: "+classDescription);
+          //message.channel.send("Dev Data: "+totalGPA+", Total GPA & "+sumGPAs+" GPA's...");
         }
         else{
-          message.channel.send("Unfortunately, I wasn't able to find: "+message.content+". This may mean that this course is not available in Fall 2020.");
+          message.channel.send("Unfortunately, I wasn't able to find: "+userMessage+"-"+classNum+". This may mean that this course is not available in Fall 2020.");
         }
       }
       catch(error){
@@ -348,6 +401,6 @@ client.on("message", async message => {
         message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     }
 }
-});
+);
 
 client.login(config.token);
