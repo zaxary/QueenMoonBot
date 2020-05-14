@@ -392,14 +392,13 @@ client.on("message", async message => {
       catch(error) {
         message.channel.send("Sorry, that isn't the proper format for a class. Please use SUBJECT-NUMBER (ex. CS-125).")
       }
-    }
     } else if (command.match(/\bthirst\b/) != null) {
       var rand = Math.floor(Math.random() * reminders.length);
       message.channel.send(reminders[rand]);
-    }
-    else if (command.match(/\blofi\b/) != null) {
+    } else if (command.match(/\blofi\b/) != null) {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     }
+  }
 }
 );
 
