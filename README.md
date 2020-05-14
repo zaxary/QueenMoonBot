@@ -20,7 +20,7 @@ A bot for the UIUC 2024 Discord server
 * `queen 8ball [message]` to get an 8ball reply (only works in #spam)
 * `queen thirst` to remind your friends to H Y D R A T E
 * `queen lofi` to get a nice lofi playlist
-* `queen class [SUBJECT-NUMBER]` to the name, credit hours, and recent avg. GPA of a UIUC course
+* `queen class [SUBJECT-NUMBER]` to the name, credit hours, and recent avg. GPA of a UIUC course (NOTE: not case-sensitive)
 
 
 
