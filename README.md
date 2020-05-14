@@ -13,11 +13,14 @@ A bot for the UIUC 2024 Discord server
 * `queen hackathon` to get the done with hackathons picture
 * `queen gc` to get the Facebook group screenshot
 * `queen quote` to get a random image from #quotes
+* `queen brownout` to get a cringe meme from #brownoutposting (only works in #brownoutposting)
 * `queen head` to get the Mater screenshot
 * `queen usercount` to see how many users are currently in the server
 * `queen contribute` to get a like to the GitHub repo
 * `queen 8ball [message]` to get an 8ball reply (only works in #spam)
 * `queen thirst` to remind your friends to H Y D R A T E
+* `queen lofi` to get a nice lofi playlist
+
 
 
 ## To run the bot yourself
