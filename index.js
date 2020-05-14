@@ -327,7 +327,7 @@ client.on("message", async message => {
         message.channel.send("That command can only be used in <#697639057592811650>");
       }
     } else if (command.match(/\bhelp\b/) != null) {
-      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)\n`queen lofi` to get a good lofi playlist```");
+      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)\n* `queen lofi` to get a good lofi playlist\n* `queen class DEPARTMENT-NUMBER` to get info on a certain class (ex: queen class cs-125)```");
     } else if (command.match(/\b8ball\b/) != null) {
       if (message.channel.id === '654838387160907777') {
         var rand = Math.floor(Math.random() * responses.length);
@@ -337,7 +337,7 @@ client.on("message", async message => {
       }
     } else if (command.match(/\bclass\b/) != null) {
       //ex: queen class cs-125
-      try{
+      try {
         //splits into subject code & number
         var words = message.content.split("-")
         var userMessage = words[0].replace('queen class ', '');
@@ -347,10 +347,10 @@ client.on("message", async message => {
         var className = "N/A";
         var credits = 0;
         var classDescription = "";
-        for (var i = 0; i < classes.length; i++){
+        for (var i = 0; i < classes.length; i++) {
           console.log(classes[i]);
           console.log(classes[i].Subject);
-          if (classes[i].Subject == subject && classes[i].Number == classNum){
+          if (classes[i].Subject == subject && classes[i].Number == classNum) {
             //set name of class
             className = classes[i].Name;
             //set credit hour amount
@@ -363,15 +363,15 @@ client.on("message", async message => {
         var gpa = 0;
         //select relevant classes for calculation
         var relevantClassesForGPA = [];
-        for (var i = 0; i < gpaData.length; i++){
-          if (gpaData[i].Subject == subject && gpaData[i].Number == classNum && gpaData[i].Year == 2019){
+        for (var i = 0; i < gpaData.length; i++) {
+          if (gpaData[i].Subject == subject && gpaData[i].Number == classNum && gpaData[i].Year == 2019) {
             relevantClassesForGPA.push(gpaData[i]);
           }
         }
         //calculate gpa
         var totalGPA = 0;
         var sumGPAs = 0;
-        for (var i = 0; i < relevantClassesForGPA.length; i++){
+        for (var i = 0; i < relevantClassesForGPA.length; i++) {
           c = relevantClassesForGPA[i];
           var gpasum = parseFloat(c.Aplus)+parseFloat(c.Aa)+parseFloat(c.Aminus)+parseFloat(c.Bplus)+parseFloat(c.Bb)+parseFloat(c.Bminus)+parseFloat(c.Cplus)+parseFloat(c.Cc)+parseFloat(c.Cminus)+parseFloat(c.Dplus)+parseFloat(c.Dd)+parseFloat(c.Dminus);
           var gpatotal = ((parseFloat(c.Aplus) + parseFloat(c.Aa))*4)+(parseFloat(c.Aminus)*3.67)+(parseFloat(c.Bplus)*3.33)+(parseFloat(c.Bb)*3)+(parseFloat(c.Bminus)*2.67)+(parseFloat(c.Cplus)*2.33)+(parseFloat(c.Cc)*2)+(parseFloat(c.Cminus)*1.67)+(parseFloat(c.Dplus)*1.33)+(parseFloat(c.Dd*1))+(parseFloat(c.Dminus)*0.67);
@@ -380,16 +380,16 @@ client.on("message", async message => {
         }
         gpa = totalGPA / sumGPAs;
         //send response (only if class name isn't 'N/A', as this would indicate that it couldn't be found in the CSV)
-        if (className != "N/A"){
-          message.channel.send(userMessage+"-"+classNum+": "+className+" -- "+credits+" -- Offered in Fall 2020 -- Recent Avg. GPA: "+Number(gpa.toFixed(2)));
-          message.channel.send("Description: "+classDescription);
+        if (className != "N/A") {
+          message.channel.send(userMessage + "-" + classNum + ": " + className + " -- " + credits + " -- Offered in Fall 2020 -- Recent Avg. GPA: " + Number(gpa.toFixed(2)));
+          message.channel.send("Description: " + classDescription);
           //message.channel.send("Dev Data: "+totalGPA+", Total GPA & "+sumGPAs+" GPA's...");
         }
-        else{
-          message.channel.send("Unfortunately, I wasn't able to find: "+userMessage+"-"+classNum+". This may mean that this course is not available in Fall 2020.");
+        else {
+          message.channel.send("Unfortunately, I wasn't able to find: " + userMessage + "-" + classNum + ". This may mean that this course is not available in Fall 2020.");
         }
       }
-      catch(error){
+      catch(error) {
         message.channel.send("Sorry, that isn't the proper format for a class. Please use SUBJECT-NUMBER (ex. CS-125).")
       }
     }
@@ -397,8 +397,8 @@ client.on("message", async message => {
       var rand = Math.floor(Math.random() * reminders.length);
       message.channel.send(reminders[rand]);
     }
-    else if (command.match(/\lofi\b/) != null) {
-        message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
+    else if (command.match(/\blofi\b/) != null) {
+      message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     }
 }
 );
