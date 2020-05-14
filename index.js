@@ -19,6 +19,11 @@ const client = new Discord.Client({
 });
 
 
+//initialize global map of courses
+var courseCache = {
+  ex001: ["Example Name", "0 hours", "4.0", "Example Description"],
+  bus101: ["Professional Responsibility and Business", "3 hours", "3.85", "Introduces business students to professional responsibility. Develops the concept of professional responsibility within a personal and interpersonal context. Continues by expanding the concept to encompass the firm and explore the global corporate context. Introduces business majors and career paths and provides an understanding of ethical decision-making. Encourages the development of a professional identity and skills, preparing students to represent the College and the University with integrity and confidence in their careers. Prerequisite: First Semester Freshman, Intercollegiate and Off-Campus Transfer Students."]
+};
 
 
 //function to read CSV data
@@ -29,7 +34,7 @@ function getCSVdata(){
      .pipe(csv())
      .on('data', (row) => {
        classes.push(row);
-       console.log(row);
+       //console.log(row);
      })
      .on('end', () => {
        console.log('CSV processed.')
@@ -40,7 +45,7 @@ function getCSVdata(){
      .pipe(csv())
      .on('data', (row) => {
        gpaData.push(row);
-       console.log(row);
+       //console.log(row);
      })
      .on('end', () => {
        console.log('CSV processed.')
@@ -337,60 +342,82 @@ client.on("message", async message => {
       }
     } else if (command.match(/\bclass\b/) != null) {
       //ex: queen class cs-125
-      try{
-        //splits into subject code & number
-        var words = message.content.split("-")
-        var userMessage = words[0].replace('queen class ', '');
-        subject = userMessage.toUpperCase();
-        classNum = words[1];
-        //get class info
-        var className = "N/A";
-        var credits = 0;
-        var classDescription = "";
-        for (var i = 0; i < classes.length; i++){
-          console.log(classes[i]);
-          console.log(classes[i].Subject);
-          if (classes[i].Subject == subject && classes[i].Number == classNum){
-            //set name of class
-            className = classes[i].Name;
-            //set credit hour amount
-            credits = classes[i].Credit;
-            //set description
-            classDescription = classes[i].Description;
-          }
-        }
-        //recent avg. GPA (only counts 2019 classes)
-        var gpa = 0;
-        //select relevant classes for calculation
-        var relevantClassesForGPA = [];
-        for (var i = 0; i < gpaData.length; i++){
-          if (gpaData[i].Subject == subject && gpaData[i].Number == classNum && gpaData[i].Year == 2019){
-            relevantClassesForGPA.push(gpaData[i]);
-          }
-        }
-        //calculate gpa
-        var totalGPA = 0;
-        var sumGPAs = 0;
-        for (var i = 0; i < relevantClassesForGPA.length; i++){
-          c = relevantClassesForGPA[i];
-          var gpasum = parseFloat(c.Aplus)+parseFloat(c.Aa)+parseFloat(c.Aminus)+parseFloat(c.Bplus)+parseFloat(c.Bb)+parseFloat(c.Bminus)+parseFloat(c.Cplus)+parseFloat(c.Cc)+parseFloat(c.Cminus)+parseFloat(c.Dplus)+parseFloat(c.Dd)+parseFloat(c.Dminus);
-          var gpatotal = ((parseFloat(c.Aplus) + parseFloat(c.Aa))*4)+(parseFloat(c.Aminus)*3.67)+(parseFloat(c.Bplus)*3.33)+(parseFloat(c.Bb)*3)+(parseFloat(c.Bminus)*2.67)+(parseFloat(c.Cplus)*2.33)+(parseFloat(c.Cc)*2)+(parseFloat(c.Cminus)*1.67)+(parseFloat(c.Dplus)*1.33)+(parseFloat(c.Dd*1))+(parseFloat(c.Dminus)*0.67);
-          totalGPA += gpatotal;
-          sumGPAs += gpasum;
-        }
-        gpa = totalGPA / sumGPAs;
-        //send response (only if class name isn't 'N/A', as this would indicate that it couldn't be found in the CSV)
-        if (className != "N/A"){
-          message.channel.send(userMessage+"-"+classNum+": "+className+" -- "+credits+" -- Offered in Fall 2020 -- Recent Avg. GPA: "+Number(gpa.toFixed(2)));
-          message.channel.send("Description: "+classDescription);
-          //message.channel.send("Dev Data: "+totalGPA+", Total GPA & "+sumGPAs+" GPA's...");
-        }
-        else{
-          message.channel.send("Unfortunately, I wasn't able to find: "+userMessage+"-"+classNum+". This may mean that this course is not available in Fall 2020.");
-        }
+
+      //check for course in dictionary/map
+      var words = message.content.replace('queen class ', '').split("-");
+      var classCode = words[0].toLowerCase()+words[1];
+      if (classCode in courseCache){
+        //notify on console
+        console.log("Course in cache. Fetching...");
+        message.channel.send(words[0].toUpperCase()+"-"+words[1]+": "+courseCache[classCode][0]+" -- "+courseCache[classCode][1]+" -- Offered in Fall 2020 -- Recent Avg. GPA: "+courseCache[classCode][2]);
+        message.channel.send("Description: "+courseCache[classCode][3]);
+        console.log("Course fetched.");
       }
-      catch(error){
-        message.channel.send("Sorry, that isn't the proper format for a class. Please use SUBJECT-NUMBER (ex. CS-125).")
+      else{
+        try{
+          //notify on console
+          console.log("Course not in cache. Fetching...");
+          //splits into subject code & number
+          var words = message.content.split("-");
+          var userMessage = words[0].replace('queen class ', '');
+          subject = userMessage.toUpperCase();
+          classNum = words[1];
+          //get class info
+          var className = "N/A";
+          var credits = 0;
+          var classDescription = "";
+          for (var i = 0; i < classes.length; i++){
+            //console.log(classes[i]);
+            //console.log(classes[i].Subject);
+            if (classes[i].Subject == subject && classes[i].Number == classNum){
+              //set name of class
+              className = classes[i].Name;
+              //set credit hour amount
+              credits = classes[i].Credit;
+              //set description
+              classDescription = classes[i].Description;
+            }
+          }
+          //recent avg. GPA (only counts 2019 classes)
+          var gpa = 0;
+          //select relevant classes for calculation
+          var relevantClassesForGPA = [];
+          for (var i = 0; i < gpaData.length; i++){
+            if (gpaData[i].Subject == subject && gpaData[i].Number == classNum && gpaData[i].Year == 2019){
+              relevantClassesForGPA.push(gpaData[i]);
+            }
+          }
+          //calculate gpa
+          var totalGPA = 0;
+          var sumGPAs = 0;
+          for (var i = 0; i < relevantClassesForGPA.length; i++){
+            c = relevantClassesForGPA[i];
+            var gpasum = parseFloat(c.Aplus)+parseFloat(c.Aa)+parseFloat(c.Aminus)+parseFloat(c.Bplus)+parseFloat(c.Bb)+parseFloat(c.Bminus)+parseFloat(c.Cplus)+parseFloat(c.Cc)+parseFloat(c.Cminus)+parseFloat(c.Dplus)+parseFloat(c.Dd)+parseFloat(c.Dminus);
+            var gpatotal = ((parseFloat(c.Aplus) + parseFloat(c.Aa))*4)+(parseFloat(c.Aminus)*3.67)+(parseFloat(c.Bplus)*3.33)+(parseFloat(c.Bb)*3)+(parseFloat(c.Bminus)*2.67)+(parseFloat(c.Cplus)*2.33)+(parseFloat(c.Cc)*2)+(parseFloat(c.Cminus)*1.67)+(parseFloat(c.Dplus)*1.33)+(parseFloat(c.Dd*1))+(parseFloat(c.Dminus)*0.67);
+            totalGPA += gpatotal;
+            sumGPAs += gpasum;
+          }
+          gpa = totalGPA / sumGPAs;
+          //send response (only if class name isn't 'N/A', as this would indicate that it couldn't be found in the CSV)
+          if (className != "N/A"){
+            message.channel.send(userMessage+"-"+classNum+": "+className+" -- "+credits+" -- Offered in Fall 2020 -- Recent Avg. GPA: "+Number(gpa.toFixed(2)));
+            message.channel.send("Description: "+classDescription);
+            //message.channel.send("Dev Data: "+totalGPA+", Total GPA & "+sumGPAs+" GPA's...");
+            console.log("Course fetched.");
+            
+            //SAVE TO MAP:
+            var courseData = [className, credits, Number(gpa.toFixed(2)).toString(), classDescription];
+            courseCache[classCode] = courseData;
+            //notify console
+            console.log("Course has been cached.");
+          }
+          else{
+            message.channel.send("Unfortunately, I wasn't able to find: "+userMessage+"-"+classNum+". This may mean that this course is not available in Fall 2020.");
+          }
+        }
+        catch(error){
+          message.channel.send("Sorry, that isn't the proper format for a class. Please use SUBJECT-NUMBER (ex. CS-125).")
+        }
       }
     }
     } else if (command.match(/\bthirst\b/) != null) {
