@@ -4,6 +4,9 @@ const fs = require('fs');
 const count = require('./count.json');
 const config = require("./config.json");
 
+//jQuery-CSV requirement
+const csv = require('./jquery.csv.js');
+
 var brownoutOut = [];
 var quotesOut = [];
 
@@ -282,6 +285,61 @@ client.on("message", async message => {
       } else {
         message.channel.send("That command can only be used in <#654838387160907777>");
       }
+    } else if (command.match(/\bclass\b/) != null) {
+      //ex: queen class cs-125
+      try{
+        //get CSV for class data
+        var classesCSV = '2020-fa.csv';
+        //get CSV for GPA data
+        var gpaDataCSV = 'uiuc-gpa-dataset.csv';
+        //convert CSV's to JSON objects
+        var classes = $.csv.toObjects(classesCSV);
+        var gpaData = $.csv.toObjects(gpaDataCSV);
+        //splits into subject code & number
+        var subject, classNum = message.content.split("-")
+        subject = subject.toUpperCase();
+        //get class info
+        var className = "N/A";
+        var credits = 0;
+        for (var i = 0; i < classes.length; i++){
+          if (classes[i].Subject == subject && classes[i].Number == classNum){
+            //set name of class
+            className = classes[i].Name;
+            //set credit hour amount
+            credits = classes[i].Credit;
+          }
+        }
+        //recent avg. GPA (only counts 2019 classes)
+        var gpa = 0;
+        //select relevant classes for calculation
+        var relevantClassesForGPA = [];
+        for (var i = 0; i < gpaData.length; i++){
+          if (gpaData[i].Subject == subject && gpaData[i].Number == classNum && gpaData[i].Year == 2019){
+            relevantClassesForGPA.push(gpaData[i]);
+          }
+        }
+        //calculate gpa
+        var totalRelevantGPA = 0;
+        for (var i = 0; i < relevantClassesForGPA.length; i++){
+          c = relevantClassesForGPA[i];
+          var sumGPAs = c.Aplus+c.Aa+c.Aminus+c.Bplus+c.Bb+c.Bminus+c.Cplus+c.Cc+c.Cminus+c.Dplus+c.Dd+c.Dminus;
+          var totalGPA = ((c.Aplus + c.Aa)*4)+(c.Aminus*3.67)+(c.Bplus*3.33)+(c.Bb*3)+(c.Bminus*2.67)+(c.Cplus*2.33)+(c.Cc*2)+(c.Cminus*1.67)+(c.Dplus*1.33)+(c.Dd*1)+(c.Dminus*0.67);
+          var avgGPA = totalGPA / sumGPAs;
+          totalRelevantGPA += avgGPA;
+        }
+        gpa = totalRelevantGPA / relevantClassesForGPA.length;
+        //send response (only if class name isn't 'N/A', as this would indicate that it couldn't be found in the CSV)
+        if (className != "N/A"){
+          message.channel.send(message.content+": "+className+" -- "+credits+" -- Offered in Fall 2020 -- Recent Avg. GPA: "+gpa);
+        }
+        else{
+          message.channel.send("Unfortunately, I wasn't able to find: "+message.content+". This may mean that this course is not available in Fall 2020.");
+        }
+      }
+      catch(error){
+        message.channel.send("Sorry, that isn't the proper format for a class. Please use SUBJECT-NUMBER (ex. CS-125).")
+      }
+    }
     } else if (command.match(/\bthirst\b/) != null) {
       var rand = Math.floor(Math.random() * reminders.length);
       message.channel.send(reminders[rand]);
