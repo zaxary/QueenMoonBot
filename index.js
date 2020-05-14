@@ -295,7 +295,7 @@ client.on("message", async message => {
         //convert CSV's to JSON objects
         var classes = $.csv.toObjects(classesCSV);
         var gpaData = $.csv.toObjects(gpaDataCSV);
-        //splits into subject code & number
+        //splits into subject code & number (goes to upper case to avoid case-sensitivity issues)
         var subject, classNum = message.content.split("-")
         subject = subject.toUpperCase();
         //get class info
