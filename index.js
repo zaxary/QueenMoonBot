@@ -4,6 +4,9 @@ const fs = require('fs');
 const count = require('./count.json');
 const config = require("./config.json");
 
+var brownoutOut = [];
+var quotesOut = [];
+
 const client = new Discord.Client({
     partials: ['MESSAGE']
 });
@@ -12,6 +15,15 @@ const client = new Discord.Client({
 client.on("ready", () => {
     console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`);
     client.user.setActivity(`queen help`);
+    getMessagesWithImages(client.channels.cache.get("697639057592811650")).then(output => {
+      brownoutOut = output;
+    });
+
+    getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
+      quotesOut = output;
+    });
+
+    console.log("images cached");
 });
 
 // Runs on join new server
@@ -242,24 +254,22 @@ client.on("message", async message => {
       return;
     } else if (command.match(/\bquote\b/) != null) {
       if (!(message.channel.id === '669726484772159488' || message.channel.id === '654784430409252904')) {
-
-        getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
-          let rand = Math.floor(Math.random() * output.length);
-          message.channel.send({
-            files: [output[rand].attachments.first().url]
-          });
+        let rand = Math.floor(Math.random() * quotesOut.length);
+        console.log(quotesOut[rand]);
+        message.channel.send({
+          files: [quotesOut[rand].attachments.first().url]
         });
+        return;
       } else {
         message.channel.send("That command cannot be used in this channel!");
       }
     } else if (command.match(/\bbrownout\b/) != null) {
       if (message.channel.id === '697639057592811650') {
-        getMessagesWithImages(client.channels.cache.get("697639057592811650")).then(output => {
-          let rand = Math.floor(Math.random() * output.length);
-          message.channel.send({
-            files: [output[rand].attachments.first().url]
-          });
+        let rand = Math.floor(Math.random() * brownoutOut.length);
+        message.channel.send({
+               files: [brownoutOut[rand].attachments.first().url]
         });
+        return;
       } else {
         message.channel.send("That command can only be used in <#697639057592811650>");
       }
