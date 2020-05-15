@@ -300,6 +300,11 @@ client.on("message", async message => {
     } else if (command.match(/\bcontribute\b/) != null) {
       message.channel.send("https://github.com/s-hfarooq/QueenMoonBot");
       return;
+    } else if (command.match(/\bwaitwhen\b/) != null) {
+      message.channel.send({
+        files: ['https://cdn.discordapp.com/attachments/654838387160907777/710942268051292290/tim.PNG']
+      });
+      return;
     } else if (command.match(/\bmatt\b/) != null) {
       message.channel.send({
         files: ['https://cdn.discordapp.com/attachments/654784481340686346/709596915485900890/IMG_9784.jpg']
