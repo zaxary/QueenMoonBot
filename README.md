@@ -15,6 +15,7 @@ A bot for the UIUC 2024 Discord server
 * `queen quote` to get a random image from #quotes
 * `queen brownout` to get a cringe meme from #brownoutposting (only works in #brownoutposting)
 * `queen head` to get the Mater screenshot
+* `queen waitwhen` to get the wait when screenshot
 * `queen usercount` to see how many users are currently in the server
 * `queen contribute` to get a like to the GitHub repo
 * `queen 8ball [message]` to get an 8ball reply (only works in #spam)
