@@ -302,7 +302,7 @@ client.on("message", async message => {
       return;
     } else if (command.match(/\bwaitwhen\b/) != null) {
       message.channel.send({
-        files: ['https://cdn.discordapp.com/attachments/654838387160907777/710942268051292290/tim.PNG']
+          files: ['https://cdn.discordapp.com/attachments/710425704524677211/711129644992036884/tim.png']
       });
       return;
     } else if (command.match(/\bmatt\b/) != null) {
