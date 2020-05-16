@@ -277,6 +277,9 @@ client.on("message", async message => {
       message.channel.send("There are currently " + userAmnt + " people in this server");
       console.log(client.guilds.cache.get('654783232969277450').memberCount);
       return;
+    } else if (command.match(/\bbuffnooble\b/) != null) {
+      message.channel.send("buff nooble buff nooble");
+      return;
     } else if (command.match(/\bhackathon\b/) != null) {
       message.channel.send({
         files: ['https://cdn.discordapp.com/attachments/654784388197908500/675113678856781834/Screenshot_20200102-213727_Discord.png']
