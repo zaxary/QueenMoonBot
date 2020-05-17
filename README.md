@@ -21,7 +21,7 @@ A bot for the UIUC 2024 Discord server
 * `queen 8ball [message]` to get an 8ball reply (only works in #spam)
 * `queen thirst` to remind your friends to H Y D R A T E
 * `queen lofi` to get a nice lofi playlist
-* `queen class [SUBJECT-NUMBER]` to the name, credit hours, and recent avg. GPA of a UIUC course (NOTE: not case-sensitive)
+* ~~`queen class [SUBJECT-NUMBER]` to the name, credit hours, and recent avg. GPA of a UIUC course (NOTE: not case-sensitive)~~ now depreciated, use [class bot](https://github.com/timot3/uiuc-classes-bot) instead. 
 * `queen buffnooble` to be reminded that nooble is BUFF
 
 
@@ -38,4 +38,4 @@ Make a file named `config.json` in the root directory of the repo. Head over to 
 Then run the bot by running `node index.js` in a terminal. To run even after closing the terminal window (ie. on an AWS EC2 instance) use the command `forever start index.js`.
 
 ## Contribute
-Make some contributions, it's open source.
+Make some contributions, it's open source. Just make a pull request, I'll probably accept it. 
