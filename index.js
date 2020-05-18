@@ -329,6 +329,11 @@ client.on("message", async message => {
       } else {
         message.channel.send("That command cannot be used in this channel!");
       }
+    } else if (command.match(/\bsoup\b/) != null) {
+        message.channel.send({
+            files: ['https://i.kym-cdn.com/entries/icons/original/000/026/699/soup.jpg']
+        });
+        return;
     } else if (command.match(/\bbrownout\b/) != null) {
       if (message.channel.id === '697639057592811650') {
         let rand = Math.floor(Math.random() * brownoutOut.length);
