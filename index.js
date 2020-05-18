@@ -208,6 +208,11 @@ client.on("message", async message => {
         files: ['https://media.discordapp.net/attachments/654785556215103488/692035239366885416/tempFileForShare_20200302-175024.png?width=546&height=679']
       });
       return;
+    } else if (command.match(/\bcatgirl\b/) != null) {
+      message.channel.send({
+        files: ['https://img1.ak.crunchyroll.com/i/spire1/1b0597832b4aa93293041240680d6b471416589032_full.jpg']
+      });
+      return;
     } else if (command.match(/\bquote\b/) != null) {
       if (!(message.channel.id === '669726484772159488' || message.channel.id === '654784430409252904')) {
         let rand = Math.floor(Math.random() * quotesOut.length);
