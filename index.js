@@ -193,6 +193,11 @@ client.on("message", async message => {
     } else if (command.match(/\bcontribute\b/) != null) {
       message.channel.send("https://github.com/s-hfarooq/QueenMoonBot");
       return;
+    } else if (command.match(/\bcorn\b/) != null) {
+      message.channel.send({
+        files: ["https://cdn.discordapp.com/attachments/697639057592811650/712531761774461008/Corn_is_the_best_crop__wheat_is_worst.mp4"]
+      });
+      return;
     } else if (command.match(/\bwaitwhen\b/) != null) {
       message.channel.send({
         files: ['https://cdn.discordapp.com/attachments/710425704524677211/711129644992036884/tim.png']
