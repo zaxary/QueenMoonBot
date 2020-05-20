@@ -23,6 +23,9 @@ A bot for the [UIUC 2024 Discord server](https://discord.gg/2pFv4Wq)
 * `queen thirst` to remind your friends to H Y D R A T E
 * `queen lofi` to get a nice lofi playlist
 * `queen buffnooble` to be reminded that nooble is BUFF
+* `queen catgirl` to see a catgirl
+* `queen illinois` to get a map of Illinois
+* `queen soup` to get soup
 * ~~`queen class [SUBJECT-NUMBER]` to the name, credit hours, and recent avg. GPA of a UIUC course (NOTE: not case-sensitive)~~ now depreciated, use [class bot](https://github.com/timot3/uiuc-classes-bot) instead.
 
 
