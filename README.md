@@ -14,6 +14,7 @@ A bot for the [UIUC 2024 Discord server](https://discord.gg/2pFv4Wq)
 * `queen gc` to get the Facebook group screenshot
 * `queen quote` to get a random image from #quotes
 * `queen brownout` to get a cringe meme from #brownoutposting (only works in #brownoutposting)
+* `queen corn` to get a sick video of corn (screw you wheat)
 * `queen head` to get the Mater screenshot
 * `queen waitwhen` to get the wait when screenshot
 * `queen usercount` to see how many users are currently in the server
