@@ -193,6 +193,11 @@ client.on("message", async message => {
     } else if (command.match(/\bcontribute\b/) != null) {
       message.channel.send("https://github.com/s-hfarooq/QueenMoonBot");
       return;
+    } else if (command.match(/\bcorn\b/) != null) {
+      message.channel.send({
+        files: ["https://cdn.discordapp.com/attachments/697639057592811650/712531761774461008/Corn_is_the_best_crop__wheat_is_worst.mp4"]
+      });
+      return;
     } else if (command.match(/\bwaitwhen\b/) != null) {
       message.channel.send({
         files: ['https://cdn.discordapp.com/attachments/710425704524677211/711129644992036884/tim.png']
@@ -253,10 +258,6 @@ client.on("message", async message => {
     } else if (command.match(/\bthirst\b/) != null) {
       var rand = Math.floor(Math.random() * reminders.length);
       message.channel.send(reminders[rand]);
-    } else if (command.match(/\bcorn\b/) != null) {
-      message.channel.send({
-        files: ["https://cdn.discordapp.com/attachments/697639057592811650/712531761774461008/Corn_is_the_best_crop__wheat_is_worst.mp4"]
-      });
     } else if (command.match(/\blofi\b/) != null) {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     }
