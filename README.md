@@ -26,6 +26,7 @@ A bot for the [UIUC 2024 Discord server](https://discord.gg/2pFv4Wq)
 * `queen catgirl` to see a catgirl
 * `queen illinois` to get a map of Illinois
 * `queen soup` to get soup
+* `queen ping` to get your ping
 * ~~`queen class [SUBJECT-NUMBER]` to the name, credit hours, and recent avg. GPA of a UIUC course (NOTE: not case-sensitive)~~ now depreciated, use [class bot](https://github.com/timot3/uiuc-classes-bot) instead.
 
 
