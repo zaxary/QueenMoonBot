@@ -6,6 +6,9 @@ const config = require("./config.json");
 
 var brownoutOut = [];
 var quotesOut = [];
+var lastQuoteUpdate;
+var lastBrownoutUpdate;
+var updateInteval = (1000 * 60 * 60 * 24);
 
 const client = new Discord.Client({
     partials: ['MESSAGE']
@@ -17,11 +20,14 @@ client.on("ready", () => {
     client.user.setActivity(`queen help`);
     getMessagesWithImages(client.channels.cache.get("697639057592811650")).then(output => {
       brownoutOut = output;
-    });
+    }).catch(console.log("brownout fetch error"));
 
     getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
       quotesOut = output;
     });
+
+    lastQuoteUpdate = Date.now();
+    lastBrownoutUpdate = Date.now();
 
     console.log("images cached");
 });
@@ -38,6 +44,7 @@ client.on("guildDelete", guild => {
     client.user.setActivity(`queen help`);
 });
 
+// Get all messages with media attached in a given channel
 async function getMessagesWithImages(channel, limit = 500) {
     const sum_messages = [];
     let last_id;
@@ -162,7 +169,7 @@ client.on("message", async message => {
     if (command.match(/\busercount\b/) != null) {
       const userAmnt = client.guilds.cache.get('654783232969277450').memberCount;
       message.channel.send("There are currently " + userAmnt + " people in this server");
-      console.log(client.guilds.cache.get('654783232969277450').memberCount);
+      //console.log(client.guilds.cache.get('654783232969277450').memberCount);
     } else if (command.match(/\bbuffnooble\b/) != null) {
       message.channel.send("buff nooble buff nooble");
     } else if (command.match(/\bhackathon\b/) != null) {
@@ -205,27 +212,45 @@ client.on("message", async message => {
       });
     } else if (command.match(/\bquote\b/) != null) {
       if (!(message.channel.id === '669726484772159488' || message.channel.id === '654784430409252904')) {
+        // Update
+        if(Math.abs(lastQuoteUpdate - Date.now()) > updateInteval) {
+          getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
+            quotesOut = output;
+          });
+
+          lastQuoteUpdate = Date.now();
+          console.log("Quotes Updated");
+        }
+
         let rand = Math.floor(Math.random() * quotesOut.length);
-        console.log(quotesOut[rand]);
         message.channel.send({
           files: [quotesOut[rand].attachments.first().url]
         });
       } else {
         message.channel.send("That command cannot be used in this channel!");
       }
-    } else if (command.match(/\bsoup\b/) != null) {
-        message.channel.send({
-            files: ['https://i.kym-cdn.com/entries/icons/original/000/026/699/soup.jpg']
-        });
     } else if (command.match(/\bbrownout\b/) != null) {
       if (message.channel.id === '697639057592811650') {
+        if(Math.abs(lastBrownoutUpdate - Date.now()) > updateInteval) {
+          getMessagesWithImages(client.channels.cache.get("697639057592811650")).then(output => {
+            brownoutOut = output;
+          }).catch(console.log("brownout fetch error"));
+
+          lastBrownoutUpdate = Date.now();
+          console.log("Brownout Update");
+        }
+
         let rand = Math.floor(Math.random() * brownoutOut.length);
         message.channel.send({
-               files: [brownoutOut[rand].attachments.first().url]
+            files: [brownoutOut[rand].attachments.first().url]
         });
       } else {
         message.channel.send("That command can only be used in <#697639057592811650>");
       }
+    } else if (command.match(/\bsoup\b/) != null) {
+        message.channel.send({
+            files: ['https://i.kym-cdn.com/entries/icons/original/000/026/699/soup.jpg']
+        });
     } else if (command.match(/\bhelp\b/) != null) {
       message.channel.send("Commands:\n```* `queen ping` to get your ping\n* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)\n* `queen lofi` to get a good lofi playlist\n* `queen buffnooble` for buff nooble\n* `queen waitwhen` to get the when did I ask screenshot\n* `queen illinois` to get a map of Illinois\n* `queen soup` to get soup\n* `queen corn` to get a corn video`\n* `queen catgirl` to see a catgirl```");
     } else if (command.match(/\b8ball\b/) != null) {
@@ -242,18 +267,15 @@ client.on("message", async message => {
       message.channel.send(reminders[rand]);
     } else if (command.match(/\blofi\b/) != null) {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
-      
     } else if (command.match(/\bping\b/) != null) {
-      var ping = Date.now() - message.createdTimestamp + " ms";
+      var ping = Date.now() - message.createdTimestamp;
       message.channel.send("Your ping is `" + `${ping}` + " ms`");
-    } 
-    else {
+    } else {
       message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
     }
 
     return;
    }
-}
-);
+});
 
 client.login(config.token);
