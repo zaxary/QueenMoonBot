@@ -227,7 +227,7 @@ client.on("message", async message => {
         message.channel.send("That command can only be used in <#697639057592811650>");
       }
     } else if (command.match(/\bhelp\b/) != null) {
-      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)\n* `queen lofi` to get a good lofi playlist\n* `queen buffnooble` for buff nooble\n* `queen waitwhen` to get the when did I ask screenshot\n* `queen illinois` to get a map of Illinois\n* `queen soup` to get soup\n* `queen corn` to get a corn video`\n* `queen catgirl` to see a catgirl```");
+      message.channel.send("Commands:\n```* `queen ping` to get your ping\n* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)\n* `queen lofi` to get a good lofi playlist\n* `queen buffnooble` for buff nooble\n* `queen waitwhen` to get the when did I ask screenshot\n* `queen illinois` to get a map of Illinois\n* `queen soup` to get soup\n* `queen corn` to get a corn video`\n* `queen catgirl` to see a catgirl```");
     } else if (command.match(/\b8ball\b/) != null) {
       if (message.channel.id === '654838387160907777') {
         var rand = Math.floor(Math.random() * responses.length);
@@ -242,7 +242,12 @@ client.on("message", async message => {
       message.channel.send(reminders[rand]);
     } else if (command.match(/\blofi\b/) != null) {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
-    } else {
+      
+    } else if (command.match(/\bping\b/) != null) {
+      var ping = Date.now() - message.createdTimestamp + " ms";
+      message.channel.send("Your ping is `" + `${ping}` + " ms`");
+    } 
+    else {
       message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
     }
 
