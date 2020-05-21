@@ -245,7 +245,7 @@ client.on("message", async message => {
       
     } else if (command.match(/\bping\b/) != null) {
       var ping = Date.now() - message.createdTimestamp + " ms";
-      message.channel.send("Your ping is `" + `${Date.now() - message.createdTimestamp}` + " ms`");
+      message.channel.send("Your ping is `" + `${ping}` + " ms`");
     } 
     else {
       message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
