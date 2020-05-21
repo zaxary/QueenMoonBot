@@ -20,7 +20,7 @@ client.on("ready", () => {
     client.user.setActivity(`queen help`);
     getMessagesWithImages(client.channels.cache.get("697639057592811650")).then(output => {
       brownoutOut = output;
-    }).catch(console.log("brownout fetch error"));
+    });
 
     getMessagesWithImages(client.channels.cache.get("697329980044083220")).then(output => {
       quotesOut = output;
@@ -234,7 +234,7 @@ client.on("message", async message => {
         if(Math.abs(lastBrownoutUpdate - Date.now()) > updateInteval) {
           getMessagesWithImages(client.channels.cache.get("697639057592811650")).then(output => {
             brownoutOut = output;
-          }).catch(console.log("brownout fetch error"));
+          });
 
           lastBrownoutUpdate = Date.now();
           console.log("Brownout Update");
