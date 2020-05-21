@@ -242,7 +242,12 @@ client.on("message", async message => {
       message.channel.send(reminders[rand]);
     } else if (command.match(/\blofi\b/) != null) {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
-    } else {
+      
+    } else if (command.match(/\bping\b/) != null) {
+      var ping = Date.now() - message.createdTimestamp + " ms";
+      message.channel.send("Your ping is `" + `${Date.now() - message.createdTimestamp}` + " ms`");
+    } 
+    else {
       message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
     }
 
