@@ -274,19 +274,17 @@ client.on("message", async message => {
     } else if (command.match(/\blofi\b/) != null) {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     } else if (command.match(/\bping\b/) != null) {
-     const channel = message.channel;
-        if(Math.round(bot.ws.ping) < 20){
-        channel.send("Mad respect <@" + message.author.id + ">" + ' your ping is crazy good at '+ Math.round(bot.ws.ping) + ' ms');
-          }
-        else if(Math.round(bot.ws.ping) < 50){
-        channel.send("Not bad <@" + message.author.id + ">" + ' your ping is average at '+ Math.round(bot.ws.ping) + ' ms');
-          }
-        else{
-        channel.send("My grandma has better internet <@" + message.author.id + ">" + ' you def need better wifi your ping is '+ Math.round(bot.ws.ping) + ' ms');
+        const channel = message.channel;
+        const ping = Math.round(client.ws.ping);
+        if (ping < 20) {
+            channel.send("Mad respect <@" + message.author.id + ">" + ' your ping is crazy good at '+ ping + ' ms');
+        } else if (ping < 50) {
+            channel.send("Not bad <@" + message.author.id + ">" + ' your ping is average at '+ ping + ' ms');
+        } else {
+            channel.send("My grandma has better internet <@" + message.author.id + ">" + ' you def need better wifi your ping is '+ ping + ' ms');
         }
-            
     } else {
-      message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
+        message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
     }
 
     return;
