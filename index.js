@@ -185,6 +185,11 @@ client.on("message", async message => {
         files: ['https://cdn.discordapp.com/attachments/669726484772159488/708103493918916709/unknown.png']
       });
       return;
+    } else if (command.match(/\brat\b/) != null) {
+      message.channel.send({
+        files: ['https://cdn.discordapp.com/attachments/697639057592811650/713237658020872192/image0.jpg']
+      });
+      return;
     } else if (command.match(/\bno anime\b/) != null) {
       message.channel.send({
         files: ['https://cdn.discordapp.com/attachments/697639057592811650/708536846531035226/image0.jpg']
@@ -245,7 +250,7 @@ client.on("message", async message => {
         message.channel.send("That command can only be used in <#697639057592811650>");
       }
     } else if (command.match(/\bhelp\b/) != null) {
-      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)\n* `queen lofi` to get a good lofi playlist\n* `queen buffnooble` for buff nooble```");
+      message.channel.send("Commands:\n```* `queen no anime` to get the no anime picture\n* `queen hackathon` to get the done with hackathons picture\n* `queen gc` to get the Facebook group screenshot\n* `queen quote` to get a random image from #quotes\n* `queen head` to get the Mater screenshot\n* `queen usercount` to see how many users are currently in the server\n* `queen contribute` to get a like to the GitHub repo\n* `queen 8ball [message]` to get an 8ball reply (only works in #spam)\n* `queen thirst` to get water messages\n* `queen brownout` to get a random attachment from #brownoutposting (only works in #brownoutposting)\n* `queen lofi` to get a good lofi playlist\n* `queen buffnooble` for buff nooble\n* `queen rat` to post this rat```");
     } else if (command.match(/\b8ball\b/) != null) {
       if (message.channel.id === '654838387160907777') {
         var rand = Math.floor(Math.random() * responses.length);
