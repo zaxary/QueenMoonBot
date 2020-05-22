@@ -275,10 +275,10 @@ client.on("message", async message => {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     } else if (command.match(/\bping\b/) != null) {
         const channel = message.channel;
-        const ping = Math.round(client.ws.ping);
-        if (ping < 20) {
+        var ping = Date.now() - message.createdTimestamp;
+        if (ping < 30) {
             channel.send("Mad respect <@" + message.author.id + ">" + ' your ping is crazy good at '+ ping + ' ms');
-        } else if (ping < 50) {
+        } else if (ping < 80) {
             channel.send("Not bad <@" + message.author.id + ">" + ' your ping is average at '+ ping + ' ms');
         } else {
             channel.send("My grandma has better internet <@" + message.author.id + ">" + ' you def need better wifi your ping is '+ ping + ' ms');
