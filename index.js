@@ -275,7 +275,7 @@ client.on("message", async message => {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     } else if (command.match(/\bping\b/) != null) {
         const channel = message.channel;
-        var ping = Date.now() - message.createdTimestamp;
+        var ping = Math.round(bot.ws.ping);
         if (ping < 30) {
             channel.send("Mad respect <@" + message.author.id + ">" + ' your ping is crazy good at '+ ping + ' ms');
         } else if (ping < 80) {
