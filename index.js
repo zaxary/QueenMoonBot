@@ -275,13 +275,14 @@ client.on("message", async message => {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     } else if (command.match(/\bping\b/) != null) {
         const channel = message.channel;
-        var ping = Math.round(bot.ws.ping);
-        if (ping < 30) {
-            channel.send("Mad respect <@" + message.author.id + ">" + ' your ping is crazy good at '+ ping + ' ms');
-        } else if (ping < 80) {
-            channel.send("Not bad <@" + message.author.id + ">" + ' your ping is average at '+ ping + ' ms');
+        var apiPing = Math.round(client.ws.ping);
+        var messagePing = Date.now() - message.createdTimestamp;
+        if (messagePing < 30) {
+            channel.send("Mad respect <@" + message.author.id + ">" + ' your message ping is crazy good at '+ messagePing + 'ms (API ping: ' + apiPing + 'ms)');
+        } else if (messagePing < 80) {
+            channel.send("Not bad <@" + message.author.id + ">" + ' your message ping is average at '+ messagePing + ' ms (API ping: ' + apiPing + ')');
         } else {
-            channel.send("My grandma has better internet <@" + message.author.id + ">" + ' you def need better wifi your ping is '+ ping + ' ms');
+            channel.send("My grandma has better internet <@" + message.author.id + ">" + ' you def need better wifi your message ping is '+ messagePing + 'ms (API ping: ' + apiPing + 'ms)');
         }
     } else {
       message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
