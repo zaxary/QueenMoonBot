@@ -274,8 +274,9 @@ client.on("message", async message => {
     } else if (command.match(/\blofi\b/) != null) {
       message.channel.send("https://open.spotify.com/playlist/1DcvziAZBZk1Ji1c65ePtk?si=Qtvu64zsQQurDtQa60tPBg");
     } else if (command.match(/\bping\b/) != null) {
-      var ping = Date.now() - message.createdTimestamp;
-      message.channel.send("Your ping is `" + `${ping}` + " ms`");
+      const channel = message.channel;
+        channel.send("Hi <@" + message.author.id + ">" + ' your ping is '+ Math.round(bot.ws.ping) + ' ms');
+         
     } else {
       message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
     }
