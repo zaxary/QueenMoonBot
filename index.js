@@ -284,7 +284,7 @@ client.on("message", async message => {
             channel.send("My grandma has better internet <@" + message.author.id + ">" + ' you def need better wifi your ping is '+ ping + ' ms');
         }
     } else {
-        message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
+      message.channel.send("That command doesn't exist. Run `queen help` to see the available commands");
     }
 
     return;
